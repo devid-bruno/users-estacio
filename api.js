@@ -1,10 +1,9 @@
 import express from 'express';
 import User from './models/user.js';
-import auth from './middleware/auth.js';
-
+import cors from 'cors';
 
 const app = express();
-
+app.use(cors())
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -17,28 +16,12 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
-app.get('/register', (req, res) => {
-    res.render('register');
-});
-
 app.get('/listuser', (req, res) => {
     User.findAll().then((users) => {
         res.render('listuser', {users: users});
     });
 })
 
-app.post("/saveuser", (req, res) => {
-    var { name, email, password} = req.body;
-    User.create({
-        name: name,
-        email: email,
-        password: password
-    }).then(() => {
-        res.redirect('/');
-    }).catch(() => {
-        res.redirect('/register');
-    })
-});
 
 app.post("/login", (req, res) => {
     var { email, password } = req.body;
@@ -48,7 +31,7 @@ app.post("/login", (req, res) => {
             password: password
         }
     }).then((user) => {
-        if (user) {
+        if (user != undefined) {
             res.redirect('/listuser');
         } else {
             res.json({err: "Invalid email or password"});
@@ -58,6 +41,43 @@ app.post("/login", (req, res) => {
     })
 });
 
+app.post("/deleteuser/:id", (req, res) => {
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(() => {
+        res.redirect('/listuser');
+    }).catch(() => {
+        res.json({err: "Error while deleting user"});
+    })
+});
+
+
+app.get('/createuser', (req, res) => {
+    res.render('newuser');
+});
+
+app.post('/createuser', (req, res) => {
+    var { name, email, password } = req.body;
+    User.create({
+        name: name,
+        email: email,
+        password: password
+    }).then(() => {
+        res.redirect('/listuser');
+    }).catch(() => {
+        res.json({err: "Error while creating user"});
+    })
+});
+
+app.get('/partition', (req, res) => {
+    res.render('partition');
+})
+
+app.get('/sair', (req, res) => {
+    res.redirect('/');
+})
 
 const port = process.env.PORT || 3000;
 
