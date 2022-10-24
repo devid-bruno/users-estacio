@@ -1,9 +1,11 @@
 import sequelize, { Sequelize } from 'sequelize';
 
-var db = 'faculdade'
+var db = 'heroku_2effc7b300a2a01'
 
-const connect = new Sequelize(`${db}`, 'root', 'rootroot', {
-    host: 'localhost',
+//mysql://b81cddf744f2f9:2f9cfd3a@us-cdbr-east-06.cleardb.net/heroku_2effc7b300a2a01?reconnect=true
+
+const connect = new Sequelize(`${db}`, 'b81cddf744f2f9', '2f9cfd3a', {
+    host: 'us-cdbr-east-06.cleardb.net',
     dialect: 'mysql',
     timezone: '-03:00'
 })
