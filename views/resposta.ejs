@@ -1,0 +1,35 @@
+<%- include('partials/index'); %>
+<p>
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Respostas
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+      <div class="mb-3">
+        <label class="form-label">Resposta 1</label>
+        <input type="text" class="form-control" name="resposta">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Resposta 2</label>
+        <input type="text" class="form-control" name="resposta">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Resposta 3</label>
+        <input type="text" class="form-control" name="resposta">
+      </div>
+      <!--escolher resposta-->
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Selecionar resposta correta
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li><a class="dropdown-item active" href="#">resposta 1</a></li>
+          <li><a class="dropdown-item active" href="#">resposta 2</a></li>
+          <li><a class="dropdown-item active" href="#">resposta 3</a></li>
+        </ul>
+      </div>
+  </div>
+</div>
+<br>
+<%- include('partials/footer'); %>

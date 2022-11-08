@@ -1,8 +1,8 @@
 function auth(req, res, next){
-    if(req.session.admin != undefined){
+    if(req.session.user != undefined){
         next();
     }else{
-        res.redirect("/adminAuth");
+        res.redirect("/");
     }
 }
 
