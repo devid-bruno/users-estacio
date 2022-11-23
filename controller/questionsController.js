@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import Question from "../models/questions.js";
 import Response from "../models/response.js";
 import User from '../models/user.js';
@@ -14,33 +14,24 @@ router.get("/perguntar", auth,(req, res) => {
     });  
 });
 
-router.post("/createquestion", (req, res) => {
+router.post("/createquestion", auth,(req, res) => {
     const {title, question } = req.body;
-
     Question.create({
         title: title,
         question: question,
     }).then(() => {
-        res.redirect("/");
+        res.redirect(`/logado`);
     });
 });
 
-router.get("/responder", auth,(req, res) => {
-    Question.findAll().then(questions => {
-        res.render("perguntas", { questions: questions, name: req.session.user.name});
-    }).catch(err => {
-        res.send(err);
+
+router.get("/responder/:id", auth,(req, res) => {
+    var id = req.params.id;
+    Question.findOne({where: {id: id}}).then(question => {
+        Response.findAll({where: {questionId: id}}).then(response => {
+            res.render("responder", {question, response, name: req.session.user.name});
+        })
     });
 });
-
-router.post("/response", (req, res) => {
-    const pergunta = req.body;
-    Response.create({
-        pergunta: pergunta
-    }).then(() => {
-        res.redirect("/respostas");
-    });
-});
-
 
 export default router;

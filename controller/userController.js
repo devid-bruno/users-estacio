@@ -1,6 +1,8 @@
 import express, { application } from "express";
 import User from '../models/user.js';
-import auth from '../middleware/auth.js';
+import auth from '../middleware/auth.js'
+import Question from "../models/questions.js";
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -41,11 +43,9 @@ router.post('/cadastro', (req, res) => {
 })
 
 router.get('/logado', auth, (req, res) => {
-    User.findAll().then(user => {
-        res.render("index", { user, name: req.session.user.name});
-    }).catch(err => {
-        res.send(err);
-    });
+    Question.findAll().then(questions => {
+        res.render("index", {questions: questions, name: req.session.user.name});
+     })
 
 });
 

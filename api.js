@@ -4,8 +4,10 @@ import session from 'express-session';
 
 import UsersController from './controller/userController.js';
 import Questions from './controller/questionsController.js';
+import Response from './controller/responseController.js';
 
 const app = express();
+
 app.use(cors())
 
 app.set('view engine', 'ejs');
@@ -30,10 +32,11 @@ app.get('/logout',(req,res) => {
 });
     
 
- app.use("/", UsersController);
- app.use("/", Questions);
+app.use("/", UsersController);
+app.use("/", Questions);
+app.use("/", Response);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

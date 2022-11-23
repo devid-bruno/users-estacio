@@ -1,32 +1,26 @@
 import Sequelize from 'sequelize';
 import db from '../db.js';
-import Question from '../models/questions.js';
+import Question from './questions.js';
 
 const Response = db.define('response', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+    response:{
+        type: Sequelize.STRING,
+        allowNull: false
     },
-    perguntas_id: {
+    questionId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
             model: Question,
             key: 'id'
         }
-    },
-    resposta: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    correta: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
     }
 });
 
 
 //Response.sync({force: true});
+
+Question.hasMany(Response);
+Response.belongsTo(Question);
+
 
 export default Response;
