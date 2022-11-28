@@ -11,7 +11,7 @@ router.get("/perguntar", auth,(req, res) => {
         res.render("perguntar", { user, name: req.session.user.name});
     }).catch(err => {
         res.send(err);
-    });  
+    })
 });
 
 router.post("/createquestion", auth,(req, res) => {
@@ -23,7 +23,6 @@ router.post("/createquestion", auth,(req, res) => {
         res.redirect(`/logado`);
     });
 });
-
 
 router.get("/responder/:id", auth,(req, res) => {
     var id = req.params.id;
